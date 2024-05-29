@@ -48,6 +48,18 @@ router.post('/', async(req, res, next) => {
   } catch (error) {
     next(error)
   }
+});
+
+//User Logout API Route
+router.delete('/', async (req, res, next) => {
+  try {
+    res.clearCookie('token');
+    res.json({
+      message: "success"
+    });    
+  } catch (error) {
+    next(error)
+  }
 })
 
 
