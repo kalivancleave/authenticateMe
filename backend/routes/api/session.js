@@ -20,11 +20,9 @@ router.get('/', async (req, res, next) => {
       res.json({
         user: safeUser
       });
-    } else {
-      res.json({
+    } else return res.json({
       user: null
-    })
-    };
+    });
     
   } catch (error) {
     next (error)
