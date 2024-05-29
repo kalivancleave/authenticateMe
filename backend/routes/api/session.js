@@ -7,6 +7,30 @@ const {User} = require('../../db/models');
 
 const router = express.Router();
 
+//Get Session User API Route (restore session user)
+router.get('/', async (req, res, next) => {
+  try {
+    const {user} = req; //using restoreUser middleware to check if there is a user in the request
+    if(user) {
+      const safeUser = {
+        id: user.id,
+        email: user.email,
+        username: user.username
+      };
+      res.json({
+        user: safeUser
+      });
+    } else {
+      res.json({
+      user: null
+    })
+    };
+    
+  } catch (error) {
+    next (error)
+  }
+})
+
 //User Login API Route
 router.post('/', async(req, res, next) => {
   try {
