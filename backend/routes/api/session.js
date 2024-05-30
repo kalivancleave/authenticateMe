@@ -29,6 +29,8 @@ router.get('/', async (req, res, next) => {
     if(user) {
       const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username
       };
@@ -48,7 +50,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', validateLogin, async(req, res, next) => {
   try {
     //destructure from req.body
-    const {credential, password} = req.body;
+    const {credential, password, firstName, lastName} = req.body;
 
     //find a user with the username or email in the db
     const user = await User.unscoped().findOne({
@@ -73,6 +75,8 @@ router.post('/', validateLogin, async(req, res, next) => {
     //correct user and password - setTokenCookie
     const safeUser = {
       id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       username: user.username
     };

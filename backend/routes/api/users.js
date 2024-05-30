@@ -35,7 +35,7 @@ const validateSignup = [
 router.post('/', validateSignup, async (req, res, next) => {
   try {
     //deconstruct req.body
-    const {email, password, username} = req.body;
+    const {email, password, username, firstName, lastName} = req.body;
 
     //use bcrypt hashsync for password to store in database
     const hashedPassword = bcrypt.hashSync(password);
@@ -44,11 +44,16 @@ router.post('/', validateSignup, async (req, res, next) => {
     const newUser = await User.create({
       email,
       username,
+      firstName,
+      lastName,
       hashedPassword
     });   
     
+    //create a safe user to return to frontend
     const safeUser = {
       id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       username: user.username
     };
